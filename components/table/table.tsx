@@ -19,7 +19,13 @@ function Table({ products }: TableProps) {
       "bg-[#f9e2af]/20 text-[#f9e2af] ring-1 ring-inset ring-[#f9e2af]/35",
     assigned:
       "bg-[#89b4fa]/20 text-[#89b4fa] ring-1 ring-inset ring-[#89b4fa]/35",
-  };  
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(query.toLowerCase()) ||
+    product.category.toLowerCase().includes(query.toLowerCase()) ||
+    product.status.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <section 
@@ -53,13 +59,13 @@ function Table({ products }: TableProps) {
           )}
           
           <span className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs">
-            {products.length} records
+            {filteredProducts.length} records
           </span>
         </div>
       </header>
       {/* View on mobile */}
       <div className="grid gap-3 sm:hidden">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <article
             key={product.id}
             className="rounded-xl border border-[#313244] bg-[#181825] p-3"
@@ -105,7 +111,7 @@ function Table({ products }: TableProps) {
         </thead>
 
         <tbody>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <tr
               key={product.id}
               className="transition-colors odd:bg-[#1e1e2e] even:bg-[#181825] hover:bg-[#313244]/70"
