@@ -1,4 +1,3 @@
-import React from 'react'
 import Data from "../data.json"
 import Table from '../components/table/table'
 import { Product } from '../components/product'
