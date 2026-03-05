@@ -19,6 +19,8 @@ function Table({ products }: TableProps) {
     acquisitionDate: "",
   });
   const [newProducts, setProducts] = React.useState<Product[]>(products);
+  const [filterCategory, setFilterCategory] = React.useState<string>("None");
+  const [filterStatus, setFilterStatus] = React.useState<string>("None");
 
   const statusClasses: Record<Product["status"], string> = {
     available:
@@ -29,11 +31,17 @@ function Table({ products }: TableProps) {
       "bg-[#89b4fa]/20 text-[#89b4fa] ring-1 ring-inset ring-[#89b4fa]/35",
   };
 
-  const filteredProducts = newProducts.filter((product) =>
-    product.name.toLowerCase().includes(query.toLowerCase()) ||
-    product.category.toLowerCase().includes(query.toLowerCase()) ||
-    product.status.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredProducts = newProducts.filter((product) => {
+    const matchesSearch = query === "" || (
+      product.name.toLowerCase().includes(query.toLowerCase()) ||
+      product.category.toLowerCase().includes(query.toLowerCase())
+    );
+
+    const matchesCategory = filterCategory === "None" || product.category === filterCategory;
+    const matchesStatus = filterStatus === "None" || product.status === filterStatus;
+
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
 
   return (
     <section 
@@ -179,10 +187,26 @@ function Table({ products }: TableProps) {
               Name
             </th>
             <th className="border-b border-[#313244] px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#bac2de]">
-              Category
+              <select name="Category" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+                <option value="None" className="text-xs font-semibold uppercase">All Categories</option>
+                {Array.from(new Set(products.map((p) => p.category))).map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </th>
             <th className="border-b border-[#313244] px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#bac2de]">
-              Status
+              <select name="Status" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
+                <option value="None" className="text-xs font-semibold uppercase">All Statuses</option>
+                {Array.from(new Set(products.map((p) => p.status))).map((status) => (
+                  <option key={status} value={status}
+                    className={`${statusClasses[status]}`}
+                  >
+                    {status}
+                  </option>
+                ))}
+              </select>
             </th>
             <th className="border-b border-[#313244] px-4 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#bac2de]">
               Acquisition Date
