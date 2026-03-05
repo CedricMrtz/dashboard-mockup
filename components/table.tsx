@@ -1,13 +1,14 @@
 "use client"
 
-import { Product } from "../product";
+import { Product } from "./product";
 import React from "react";
 
 type TableProps = {
   products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 };
 
-function Table({ products }: TableProps) {
+function Table({ products, setProducts }: TableProps) {
   const [isSearching, setIsSearching] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -18,7 +19,6 @@ function Table({ products }: TableProps) {
     status: "available",
     acquisitionDate: "",
   });
-  const [newProducts, setProducts] = React.useState<Product[]>(products);
   const [filterCategory, setFilterCategory] = React.useState<string>("None");
   const [filterStatus, setFilterStatus] = React.useState<string>("None");
 
@@ -31,7 +31,7 @@ function Table({ products }: TableProps) {
       "bg-[#89b4fa]/20 text-[#89b4fa] ring-1 ring-inset ring-[#89b4fa]/35",
   };
 
-  const filteredProducts = newProducts.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     const matchesSearch = query === "" || (
       product.name.toLowerCase().includes(query.toLowerCase()) ||
       product.category.toLowerCase().includes(query.toLowerCase())
@@ -139,8 +139,8 @@ function Table({ products }: TableProps) {
           <button
             onClick={() => {
               if (newProduct.name && newProduct.category && newProduct.status && newProduct.acquisitionDate) {
-                const newId = newProducts.length > 0 ? Math.max(...newProducts.map((p) => p.id)) + 1 : 1;
-                setProducts([...newProducts, { id: newId, ...newProduct }]);
+                const newId = products.length > 0 ? Math.max(...products.map((p) => p.id)) + 1 : 1;
+                setProducts([...products, { id: newId, ...newProduct }]);
                 setIsAdding(false);
                 setNewProduct({ name: "", category: "", status: "available", acquisitionDate: "" });
               }
@@ -149,7 +149,7 @@ function Table({ products }: TableProps) {
           >
             Save
           </button>
-  </div>
+      </div>
       )}
       {/* View on mobile */}
       <div className="grid gap-3 sm:hidden">
