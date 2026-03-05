@@ -46,7 +46,7 @@ function Table({ products, setProducts }: TableProps) {
   return (
     <section 
       className="rounded-2xl border border-[#313244] bg-[#1e1e2e]/95 p-3 text-[#cdd6f4] shadow-[0_12px_28px_rgba(17,17,27,0.45)] backdrop-blur-sm sm:p-4 md:p-5"
-      onClick={() => isSearching ? setIsSearching(false) : null}>
+      >
       {/* Header */}
       <header className="mb-4 flex flex-wrap items-center gap-2">
         <h2 className="text-base font-semibold text-[#f5e0dc] sm:text-lg">
@@ -84,7 +84,7 @@ function Table({ products, setProducts }: TableProps) {
               ref={inputRef}
               type="text" 
               className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs"
-              placeholder="Search equipment..."
+              placeholder="Search..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />  
@@ -152,7 +152,7 @@ function Table({ products, setProducts }: TableProps) {
       </div>
       )}
       {/* View on mobile */}
-      <div className="grid gap-3 sm:hidden">
+      <div className="grid gap-3 sm:hidden max-h-135 overflow-y-auto overflow-x-auto">
         {filteredProducts.map((product) => (
           <article
             key={product.id}
@@ -176,7 +176,7 @@ function Table({ products, setProducts }: TableProps) {
       </div>
 
       {/* View on desktop */}
-      <div className="hidden overflow-x-auto rounded-xl border border-[#313244] bg-[#181825] sm:block">
+      <div className="hidden max-h-135 overflow-y-auto overflow-x-auto rounded-xl border border-[#313244] bg-[#181825] sm:block">
         <table className="min-w-full border-separate border-spacing-0 text-left text-sm">
           <thead className="sticky top-0 z-10 bg-[#11111b]/95">
           <tr>
