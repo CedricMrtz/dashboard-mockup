@@ -53,60 +53,59 @@ function Table({ products, setProducts }: TableProps) {
           Equipment Table        
         </h2>
         <div className="ml-auto flex items-center gap-2">
-          { isAdding ? (
-            <button
-              onClick={() => {
-                setIsAdding(false);
-                setNewProduct({
-                  name: "",
-                  category: "",
-                  status: "available",
-                  acquisitionDate: "",
-                });
-              }}
-              className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs hover:bg-[#313244]/70 focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/50"
-            >
-              Cancel
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                setIsAdding(true);
-              }}
-              className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs hover:bg-[#313244]/70 focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/50"
-            >
-              Add row
-            </button>
-          )}
-
-          { isSearching ? (
-            <input 
-              ref={inputRef}
-              type="text" 
-              className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs"
-              placeholder="Search..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />  
-          ) : (
-            <button
-              onClick={() => {
-                setIsSearching(true);
-                setTimeout(() => inputRef.current?.focus(), 100);
-              }}
-              className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs hover:bg-[#313244]/70 focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/50"
-            >
-              Search
-            </button>
-          )}
-          
+          <button
+            onClick={() => {
+              setIsAdding(true);
+            }}
+            className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs hover:bg-[#313244]/70 focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/50"
+          >
+            Add row
+          </button>
+          <button
+            onClick={() => {
+              setIsSearching(true);
+              setTimeout(() => inputRef.current?.focus(), 100);
+            }}
+            className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs hover:bg-[#313244]/70 focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/50"
+          >
+            Search
+          </button>       
           <span className="rounded-full border border-[#7f849c]/50 bg-[#313244] px-2.5 py-1 text-[11px] font-medium text-[#cdd6f4] sm:px-3 sm:text-xs">
             {filteredProducts.length} records
           </span>
         </div>
       </header>
+      { isSearching && (
+        <div className="mb-4 flex items-center gap-2 rounded-xl border border-[#313244] bg-[#181825] p-3">
+          
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Search equipment..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="flex-1 rounded-lg border border-[#7f849c]/50 bg-[#313244] 
+            px-3 py-2 text-xs text-[#cdd6f4] placeholder:text-[#6c7086]
+            focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/40"
+          />
+
+          <button
+            onClick={() => {
+              setQuery("");
+              setIsSearching(false);
+            }}
+            className="rounded-lg border border-[#7f849c]/40 bg-[#313244] 
+            px-3 py-2 text-xs font-medium text-[#cdd6f4] 
+            hover:bg-[#313244]/70 focus:outline-none focus:ring-2 focus:ring-[#89b4fa]/40"
+          >
+            Close
+          </button>
+
+        </div>
+      )}
+          
       {isAdding && (
-        <div className="mb-4 grid grid-cols-1 gap-2 rounded-xl border border-[#313244] bg-[#181825] p-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mb-4 grid grid-cols-1 gap-2 rounded-xl border border-[#313244] bg-[#181825] p-3 sm:grid-cols-2 lg:grid-cols-6">
           <input
             type="text"
             placeholder="Name"
@@ -149,7 +148,16 @@ function Table({ products, setProducts }: TableProps) {
           >
             Save
           </button>
-      </div>
+          <button
+            onClick={() => {
+              setIsAdding(false);
+              setNewProduct({ name: "", category: "", status: "available", acquisitionDate: "" });
+            }}
+            className="rounded-lg border border-[#f38ba8]/40 bg-[#f38ba8]/10 px-3 py-2 text-xs font-medium text-[#f38ba8] hover:bg-[#f38ba8]/20 focus:outline-none focus:ring-2 focus:ring-[#f38ba8]/40 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
       )}
       {/* View on mobile */}
       <div className="grid gap-3 sm:hidden max-h-135 overflow-y-auto overflow-x-auto">
