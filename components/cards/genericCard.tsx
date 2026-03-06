@@ -2,6 +2,7 @@ type StatCardProps = {
   label: string;
   value: number;
   color?: "blue" | "green" | "yellow";
+  className?: string;
 };
 
 const colorClasses = {
@@ -19,20 +20,20 @@ const colorClasses = {
   },
 };
 
-function GenericCard({ label, value, color = "blue" }: StatCardProps) {
+function GenericCard({ label, value, color = "blue", className = "" }: StatCardProps) {
   const { badge, glow } = colorClasses[color];
 
   return (
-    <article className={`rounded-2xl border border-[#313244] bg-[#1e1e2e]/95 p-4 text-[#cdd6f4] backdrop-blur-sm ${glow}`}>
+    <article className={`flex h-full flex-col justify-center rounded-2xl border border-[#313244] bg-[#1e1e2e]/95 p-4 text-[#cdd6f4] backdrop-blur-sm ${glow} ${className}`}>
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#bac2de]">
         {label}
       </p>
       <p className="mt-2 text-3xl font-bold text-[#f5e0dc]">
         {value}
       </p>
-      <span className={`mt-3 inline-block rounded-full px-2.5 py-1 text-xs font-medium ${badge}`}>
+      {/* <span className={`mt-3 inline-block rounded-full px-2.5 py-1 text-xs font-medium ${badge}`}>
         {value} records
-      </span>
+      </span> */}
     </article>
   );
 }

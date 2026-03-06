@@ -5,6 +5,7 @@ import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recha
 
 type GraphCardProps = {
 	products: Product[];
+	className?: string;
 };
 
 const STATUS_META = {
@@ -13,7 +14,7 @@ const STATUS_META = {
 	assigned: { label: "Assigned", color: "#3b82f6" },
 } as const;
 
-function GraphCard({ products }: GraphCardProps) {
+function GraphCard({ products, className = "" }: GraphCardProps) {
 	const total = products.length;
 
 	const chartData = [
@@ -38,8 +39,8 @@ function GraphCard({ products }: GraphCardProps) {
 	];
 
 	return (
-		<article className="rounded-2xl border border-[#313244] bg-[#1e1e2e]/95 p-4 text-[#cdd6f4] shadow-[0_0_12px_rgba(137,180,250,0.08)] backdrop-blur-sm">
-			<div className="h-45 w-full">
+		<article className={`flex h-full flex-col rounded-2xl border border-[#313244] bg-[#1e1e2e]/95 p-4 text-[#cdd6f4] shadow-[0_0_12px_rgba(137,180,250,0.08)] backdrop-blur-sm ${className}`}>
+			<div className="min-h-[220px] w-full flex-1">
 				<ResponsiveContainer width="100%" height="100%">
 					<PieChart>
 						<Pie
